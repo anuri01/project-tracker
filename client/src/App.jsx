@@ -1,8 +1,9 @@
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate, Navigate } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import useUserStore from './store/userStore'; 
+import ProfilePage from './pages/ProfilePage';
 import './App.css';
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
             // 로그인 상태일때 보여줄 메뉴
             <>
               <Link to="/">홈</Link>
+              <Link to="/profile">내 프로필</Link>
               <button onClick={handleLogout} className='logout-button'>로그아웃</button>
             </>
           ) : (
@@ -47,7 +49,8 @@ function App() {
       </header>
       <main>
         <Routes>
-          <Route path="/" element={isLoggedIn ? <HomePage /> : <LoginPage />} />
+          <Route path="/" element={isLoggedIn ? <HomePage /> : <Navigate to="/login" />} />
+          <Route path="/profile" element={isLoggedIn ? <ProfilePage /> : <Navigate to="/login" />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
         </Routes>

@@ -241,6 +241,48 @@ app.post('/api/users/login', async (req, res) => {
     }
 });
 
+app.get('/api/users/me', authMiddleware, async (req, res) => {
+ try {
+        // authMiddleware가 req.user에 넣어준 정보로 DB에서 사용자를 찾습니다.
+        const user = await User.findById(req.user.id).select('-password'); // 비밀번호는 제외하고 선택
+        if (!user) {
+            return res.status(404).json({ message: '사용자를 찾을 수 없습니다.' });
+        }
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: '서버 오류가 발생했습니다.' });
+    }
+});
+
+// 비밀번호 변경
+app.put('/api/users/password', authMiddleware, async (req, res) => {
+    try {
+        const { oldPassword, newPassword } = req.body;
+        if (!oldPassword || !newPassword) {
+            return res.status(400).json({ message: '기존 비밀번호와 새 비밀번호를 모두 입력해야 합니다.' });
+        }
+
+        // 1. 사용자 정보 찾기
+        const user = await User.findById(req.user.id);
+
+        // 2. 기존 비밀번호가 맞는지 확인
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: '기존 비밀번호가 일치하지 않습니다.' });
+        }
+
+        // 3. 새 비밀번호로 업데이트하고 저장 (pre-save 훅이 여기서도 동작합니다)
+        user.password = newPassword;
+        await user.save();
+
+        res.json({ message: '비밀번호가 성공적으로 변경되었습니다.' });
+
+    } catch (error) {
+        console.error('!!! 비밀번호 변경 중 에러 발생 !!!', error);
+        res.status(500).json({ message: '서버 오류가 발생했습니다.' });
+    }
+});
+
 // 서버 실행
 app.listen(PORT, () => {
   console.log(`서버가 http://localhost:${PORT} 에서 실행 중입니다.`);
