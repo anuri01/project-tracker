@@ -1,0 +1,30 @@
+.my-box {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3), -2px 2px 5px blue;
+    border: 1px solid #555;
+    border-radius: 5px;
+    width:fit-content;
+    padding: 20px;
+}
+
+.my-inset-box {
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5);
+    min-width: 300px;
+    min-height: 300px;
+    /* background-image: linear-gradient(to right, red 0%,rgb(150, 100, 8) 50%, yellow 100%); */
+    background-image: radial-gradient(at bottom right, red, yellow);
+
+}
+
+h1 {
+    text-align: center;
+    text-shadow: 2px 2px 5px #666;
+    background-image: linear-gradient(30deg, red,yellow);
+}
+
+.repeating-gradient-linear {
+    background-image: repeating-linear-gradient(45deg, red, red 10px, blue 10px, blue 20px);
+}
+
+.repeating-gradient-radial {
+    background-image: repeating-radial-gradient(circle, red, red 10px, blue 10px, blue 20px);
+}
