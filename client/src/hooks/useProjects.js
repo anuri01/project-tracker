@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import api from '../api/axiosConfig';
 
 // 프로젝트 관련 로직을 담을 커스텀 훅
@@ -7,13 +7,17 @@ export function useProjects() {
   const [editingProjectId, setEditingProjectId] = useState(null);
   const [editName, setEditName] = useState('');
   const [editDesc, setEditDesc] = useState('');
+  const [isLoading, setIsLoading] = useState(false); // 1. 로딩 상태 추가
 
   const fetchProjects = async () => {
+    setIsLoading(true); // 2. 데이터 요청 시작 시 true로 설정
     try {
       const response = await api.get('/projects');
       setProjects(response.data);
     } catch (error) {
       console.error("프로젝트 목록을 불러오는 데 실패했습니다:", error);
+    } finally {
+      setIsLoading(false); // 3. 요청이 성공하든 실패하든 끝나면 false로 설정
     }
   };
 
@@ -60,6 +64,7 @@ export function useProjects() {
     editingProjectId,
     editName,
     editDesc,
+    isLoading,
     setEditName,
     setEditDesc,
     setEditingProjectId,

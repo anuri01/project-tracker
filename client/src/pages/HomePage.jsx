@@ -12,6 +12,7 @@ function HomePage() {
     editingProjectId,
     editName,
     editDesc,
+    isLoading,
     setEditName,
     setEditDesc,
     setEditingProjectId,
@@ -116,6 +117,7 @@ const handleDeleteTask = async (taskId) => {
             editingProjectId={editingProjectId}
             editName={editName}
             editDesc={editDesc}
+            isLoading={isLoading}
             setEditName={setEditName}
             setEditDesc={setEditDesc}
             handleUpdateSubmit={handleUpdateSubmit}

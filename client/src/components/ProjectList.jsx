@@ -4,7 +4,8 @@ function ProjectList({
   projects, 
   editingProjectId, 
   editName, 
-  editDesc, 
+  editDesc,
+  isLoading, 
   setEditName, 
   setEditDesc, 
   handleUpdateSubmit, 
@@ -16,7 +17,8 @@ function ProjectList({
   return (
     <div className="project-list">
       <h2>프로젝트 목록</h2>
-      {projects.length > 0 ? (
+      { isLoading ? (<p>프로젝트 목록을 불러오는중...</p>) :
+      projects.length > 0 ? (
         projects.map(project => (
           <div key={project._id} className="project-card" onClick={() => setSelectedProject(project)}>
             {editingProjectId === project._id ? (
