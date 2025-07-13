@@ -14,7 +14,7 @@ function ProfilePage() {
             try {
                 const response = await api.get('/users/me');
                 setUser(response.data);
-            } catch (_err) {
+            } catch (err) {
                 setError('사용자 정보를 불러오는데 실패했습니다.');
             }
         };
