@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/axiosConfig';
+import toast from 'react-hot-toast'; // 👈 toast 함수 불러오기
 
 function ProfilePage() {
     const [user, setUser] = useState(null);
@@ -7,7 +8,7 @@ function ProfilePage() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
+//    const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -15,7 +16,7 @@ function ProfilePage() {
                 const response = await api.get('/users/me');
                 setUser(response.data);
             } catch (err) {
-                setError('사용자 정보를 불러오는데 실패했습니다.');
+                toast.error('사용자 정보를 불러오는데 실패했습니다.');
             }
         };
         fetchUser();
@@ -24,10 +25,10 @@ function ProfilePage() {
     const handlePasswordChange = async (e) => {
         e.preventDefault();
         setMessage('');
-        setError('');
+       // setError('');
 
         if (newPassword !== confirmPassword) {
-            setError('새 비밀번호와 일치하지 않습니다.');
+            toast.error('새 비밀번호와 일치하지 않습니다.');
             return;
         }
 
@@ -39,7 +40,7 @@ function ProfilePage() {
             setNewPassword('');
             setConfirmPassword('');
         } catch (err) {
-            setError(err.response.data.message);
+            toast.error(err.response.data.message);
         }
     };
 
@@ -80,7 +81,7 @@ function ProfilePage() {
                  <button type="submit" className='button-primary'>비밀번호 변경</button>
             </form>
             {message && <p className='success-message'>{message}</p>}
-            {error && <p className='error-message'>{error}</p>}
+            {/* {error && <p className='error-message'>{error}</p>} */}
         </div>
     );
 

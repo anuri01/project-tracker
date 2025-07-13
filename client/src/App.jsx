@@ -1,4 +1,5 @@
 import { Routes, Route, Link, useNavigate, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
@@ -24,6 +25,7 @@ function App() {
 
   return (
     <div className='container'>
+      <Toaster position="top-center" toastOptions={{duration:1000,}} />
       <header>
         <div className='header-content'>
         <h1>
