@@ -1,8 +1,12 @@
 import axios from 'axios';
 
+// VITE_API_URL은 Vercel에 설정한 환경 변수입니다.
+// 개발 환경(.env.local)에서는 localhost, 배포 환경에서는 Render 서버 주소를 가리킵니다.
+const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+
 // 1. axios 인스턴스 생성
 const instance = axios.create({
-    baseURL: 'http://localhost:3000/api' // 모든 요청의 기본 URL
+    baseURL: baseURL
 });
 
 // 2. 요청 인터셉터(interceptor) 설정
